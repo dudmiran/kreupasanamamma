@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kreupasanam Amma – Our Lady of Grace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --deep-navy: #0a0c1a;
+            --midnight: #080d1f;
+            --royal-blue: #1a237e;
+            --cobalt: #1565c0;
+            --sky-glow: #3d7de0;
+            --gold: #d4a843;
+            --gold-light: #f0c96b;
+            --gold-pale: #fff8e1;
+            --ivory: #faf8f0;
+            --cream: #f5f0e8;
+            --rose: #c2405a;
+            --rose-light: #e8a0b0;
+            --text-light: #e8dcc8;
+            --text-pale: #b8a99a;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'EB Garamond', serif;
+            background: var(--midnight);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* ===== PARTICLES / STARS ===== */
+        #stars-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(to bottom, rgba(8,13,31,0.97), transparent);
+            backdrop-filter: blur(8px);
+        }
+
+        .nav-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--gold);
+            letter-spacing: 0.15em;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-pale);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--gold-light); }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 70% 60% at 50% 40%, rgba(21,101,192,0.25) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 70% at 80% 60%, rgba(194,64,90,0.1) 0%, transparent 60%),
+                linear-gradient(180deg, #060a18 0%, #0d1535 40%, #080d1f 100%);
+            z-index: -1;
+        }
+
+        .hero-halo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -55%);
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at center, rgba(61,125,224,0.15) 0%, rgba(212,168,67,0.08) 40%, transparent 70%);
+            animation: halo-pulse 4s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes halo-pulse {
+            0%, 100% { transform: translate(-50%, -55%) scale(1); opacity: 0.7; }
+            50% { transform: translate(-50%, -55%) scale(1.08); opacity: 1; }
+        }
+
+        .hero-cross {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: var(--gold);
+            letter-spacing: 0.4em;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+            animation: fadeDown 1s ease both;
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            color: var(--ivory);
+            text-shadow: 0 0 60px rgba(212,168,67,0.4), 0 4px 30px rgba(0,0,0,0.8);
+            animation: fadeDown 1.2s ease both 0.2s;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-title span {
+            display: block;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold), #b8860b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            color: var(--rose-light);
+            margin-top: 0.8rem;
+            letter-spacing: 0.05em;
+            animation: fadeDown 1.4s ease both 0.4s;
+        }
+
+        .hero-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem auto;
+            width: fit-content;
+            animation: fadeIn 1.6s ease both 0.6s;
+        }
+
+        .hero-divider::before,
+        .hero-divider::after {
+            content: '';
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold));
+        }
+
+        .hero-divider::after {
+            background: linear-gradient(to left, transparent, var(--gold));
+        }
+
+        .hero-divider i { color: var(--gold); font-size: 0.8rem; }
+
+        .hero-prayer {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-pale);
+            max-width: 550px;
+            line-height: 1.9;
+            animation: fadeIn 1.8s ease both 0.8s;
+        }
+
+        /* ===== IMAGES GALLERY ===== */
+        .gallery-section {
+            position: relative;
+            z-index: 1;
+            padding: 5rem 2rem;
+            background: linear-gradient(180deg, var(--midnight), #0d1535 50%, var(--midnight));
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .section-tag {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.35em;
+            color: var(--gold);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 0.8rem;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: var(--ivory);
+            font-weight: 600;
+        }
+
+        .section-line {
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+            margin: 1.2rem auto 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            cursor: pointer;
+            border: 1px solid rgba(212,168,67,0.2);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 60px rgba(212,168,67,0.2), 0 0 0 1px rgba(212,168,67,0.4);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.85) saturate(1.1);
+            transition: filter 0.4s, transform 0.5s;
+        }
+
+        .gallery-item:hover img {
+            filter: brightness(1) saturate(1.3);
+            transform: scale(1.04);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(8,13,31,0.8) 0%, transparent 50%);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 1.2rem;
+            left: 1.2rem;
+            right: 1.2rem;
+        }
+
+        .gallery-caption p {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: var(--gold-light);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        /* ===== ABOUT SECTION ===== */
+        .about-section {
+            position: relative;
+            z-index: 1;
+            padding: 6rem 2rem;
+            background: radial-gradient(ellipse at center, rgba(21,101,192,0.1) 0%, transparent 70%);
+        }
+
+        .about-inner {
+            max-width: 780px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-inner p {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: var(--text-pale);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-inner p.highlight {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.4rem;
+            color: var(--gold-light);
+            line-height: 1.8;
+        }
+
+        /* ===== CANDLES ROW ===== */
+        .candles-row {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .candle-card {
+            text-align: center;
+            padding: 2rem 1.8rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,168,67,0.15);
+            border-radius: 12px;
+            max-width: 220px;
+            transition: all 0.3s;
+        }
+
+        .candle-card:hover {
+            background: rgba(212,168,67,0.05);
+            border-color: rgba(212,168,67,0.4);
+            transform: translateY(-4px);
+        }
+
+        .candle-icon {
+            font-size: 2.2rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: block;
+            animation: flicker 3s ease-in-out infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; text-shadow: 0 0 20px rgba(240,201,107,0.8); }
+            50% { opacity: 0.85; text-shadow: 0 0 35px rgba(240,201,107,1); }
+        }
+
+        .candle-card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            color: var(--ivory);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.6rem;
+        }
+
+        .candle-card p {
+            font-size: 0.9rem;
+            color: var(--text-pale);
+            line-height: 1.6;
+        }
+
+        /* ===== SOCIAL SECTION ===== */
+        .social-section {
+            position: relative;
+            z-index: 1;
+            padding: 5rem 2rem;
+            background: linear-gradient(180deg, var(--midnight), #0a0f25, var(--midnight));
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .social-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 2rem 2.5rem;
+            text-decoration: none;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            transition: all 0.3s ease;
+            min-width: 160px;
+        }
+
+        .social-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+
+        .social-card.instagram { --c: #e1306c; }
+        .social-card.facebook  { --c: #1877f2; }
+        .social-card.threads   { --c: #ffffff; }
+        .social-card.youtube   { --c: #ff0000; }
+
+        .social-card:hover {
+            border-color: var(--c);
+            background: rgba(255,255,255,0.05);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 30px color-mix(in srgb, var(--c) 20%, transparent);
+        }
+
+        .social-card i {
+            font-size: 2.2rem;
+            color: var(--c);
+        }
+
+        .social-card span {
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            color: var(--text-pale);
+            text-transform: uppercase;
+        }
+
+        .social-card small {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.3);
+        }
+
+        /* ===== PRAYER SECTION ===== */
+        .prayer-section {
+            position: relative;
+            z-index: 1;
+            padding: 6rem 2rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .prayer-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(212,168,67,0.06) 0%, transparent 70%);
+        }
+
+        .prayer-box {
+            max-width: 680px;
+            margin: 3rem auto 0;
+            padding: 3rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(212,168,67,0.2);
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .prayer-box::before,
+        .prayer-box::after {
+            content: '✦';
+            position: absolute;
+            color: var(--gold);
+            font-size: 1.2rem;
+            opacity: 0.6;
+        }
+
+        .prayer-box::before { top: -0.7rem; left: 50%; transform: translateX(-50%); background: var(--midnight); padding: 0 0.5rem; }
+        .prayer-box::after { bottom: -0.7rem; left: 50%; transform: translateX(-50%); background: var(--midnight); padding: 0 0.5rem; }
+
+        .prayer-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.25rem;
+            line-height: 2;
+            color: var(--text-pale);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            position: relative;
+            z-index: 1;
+            background: #06080f;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(212,168,67,0.15);
+        }
+
+        .footer-cross {
+            font-size: 1.5rem;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        footer p {
+            font-size: 0.85rem;
+            color: var(--text-pale);
+            letter-spacing: 0.05em;
+        }
+
+        footer .footer-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== FLOATING LIGHT ===== */
+        .float-light {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 200;
+        }
+
+        .float-pray-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.9rem 1.6rem;
+            background: linear-gradient(135deg, var(--gold), #b8860b);
+            color: #0a0c1a;
+            border-radius: 50px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 8px 30px rgba(212,168,67,0.4);
+            transition: all 0.3s;
+        }
+
+        .float-pray-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212,168,67,0.6);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-links { display: none; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-item:last-child { grid-column: 1 / -1; max-width: 300px; margin: 0 auto; aspect-ratio: 1/1; }
+            .social-card { min-width: 130px; padding: 1.5rem; }
+            .prayer-box { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Stars Canvas -->
+    <canvas id="stars-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="nav-logo">✦ KREUPASANAM</a>
+        <ul class="nav-links">
+            <li><a href="#gallery">Images</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#social">Follow</a></li>
+            <li><a href="#prayer">Prayer</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-halo"></div>
+
+        <span class="hero-cross">✞ &nbsp; AVE MARIA &nbsp; ✞</span>
+
+        <h1 class="hero-title">
+            Kreupasanam<br>
+            <span>Amma</span>
+        </h1>
+
+        <p class="hero-subtitle">Our Lady of Grace &middot; Mother of Mercy</p>
+
+        <div class="hero-divider">
+            <i class="fas fa-star-of-david"></i>
+        </div>
+
+        <p class="hero-prayer">
+            "She who holds time in her heart,<br>
+            intercedes for all who call upon her name.<br>
+            Blessed Mother, hear our prayers."
+        </p>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery-section" id="gallery">
+        <div class="section-header reveal">
+            <span class="section-tag">Sacred Images</span>
+            <h2 class="section-title">Kreupasanam Amma</h2>
+            <span class="section-line"></span>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item reveal">
+                <img src="assets/WhatsApp Image 2026-02-19 at 12.09.14 PM.jpeg" alt="Kreupasanam Amma – Silver Relief" loading="lazy">
+                <div class="gallery-overlay"></div>
+                <div class="gallery-caption">
+                    <p>Our Lady in Silver Grace</p>
+                </div>
+            </div>
+
+            <div class="gallery-item reveal" style="transition-delay:0.15s">
+                <img src="assets/WhatsApp Image 2026-02-19 at 12.09.36 PM.jpeg" alt="Kreupasanam Amma – Crowned Queen" loading="lazy">
+                <div class="gallery-overlay"></div>
+                <div class="gallery-caption">
+                    <p>Queen of Heaven & Earth</p>
+                </div>
+            </div>
+
+            <div class="gallery-item reveal" style="transition-delay:0.3s">
+                <img src="assets/WhatsApp Image 2026-02-19 at 12.02.49 PM.jpeg" alt="Kreupasanam Amma – Immaculate Heart" loading="lazy">
+                <div class="gallery-overlay"></div>
+                <div class="gallery-caption">
+                    <p>Immaculate Heart of Mary</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about-section" id="about">
+        <div class="about-inner">
+            <div class="section-header reveal">
+                <span class="section-tag">Devotion</span>
+                <h2 class="section-title">Grace & Intercession</h2>
+                <span class="section-line"></span>
+            </div>
+
+            <br>
+
+            <p class="highlight reveal">
+                "Kreupasanam Amma — the Blessed Mother who holds the clock close to her heart, reminding us that every moment belongs to God."
+            </p>
+
+            <p class="reveal" style="transition-delay:0.2s">
+                Kreupasanam is a sacred Marian shrine of deep spiritual significance, where countless souls have experienced the tender mercy and grace of Our Lady. The image of Amma holding a clock to her heart is a powerful reminder that time itself is a gift, and that every hour is an opportunity to draw closer to God through her intercession.
+            </p>
+
+            <div class="candles-row">
+                <div class="candle-card reveal">
+                    <span class="candle-icon">🕯️</span>
+                    <h3>Daily Prayer</h3>
+                    <p>Lift your heart to Amma through the Rosary and devotional prayers each day.</p>
+                </div>
+                <div class="candle-card reveal" style="transition-delay:0.15s">
+                    <span class="candle-icon">📰</span>
+                    <h3>Newsletter</h3>
+                    <p>Stay connected with the Kreupasanam Newsletter — messages, miracles & updates.</p>
+                </div>
+                <div class="candle-card reveal" style="transition-delay:0.3s">
+                    <span class="candle-icon">⏱️</span>
+                    <h3>Time & Grace</h3>
+                    <p>She holds time close — every moment offered to her is transformed into grace.</p>
+                </div>
+                <div class="candle-card reveal" style="transition-delay:0.45s">
+                    <span class="candle-icon">✝️</span>
+                    <h3>Healing</h3>
+                    <p>Miracles of healing and mercy flow abundantly from her maternal heart.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOCIAL -->
+    <section class="social-section" id="social">
+        <div class="section-header reveal">
+            <span class="section-tag">Fr. V.P. Joseph</span>
+            <h2 class="section-title">Follow the Ministry</h2>
+            <span class="section-line"></span>
+        </div>
+        <p class="reveal" style="color: var(--text-pale); margin-top: 1rem; font-style: italic; font-size: 1.1rem;">
+            Join our growing community of devotees — receive daily prayers, messages, and blessings.
+        </p>
+
+        <div class="social-links">
+            <a href="https://www.instagram.com/fr_v_p_joseph_kreupasanam" target="_blank" rel="noopener noreferrer" class="social-card instagram reveal" onclick="window.open(this.href,'_blank');return false;">
+                <i class="fab fa-instagram"></i>
+                <span>Instagram</span>
+                <small>@fr_v_p_joseph_kreupasanam</small>
+            </a>
+
+            <a href="https://www.facebook.com/share/1BxoRTSx5d/" target="_blank" rel="noopener noreferrer" class="social-card facebook reveal" style="transition-delay:0.15s" onclick="window.open(this.href,'_blank');return false;">
+                <i class="fab fa-facebook"></i>
+                <span>Facebook</span>
+                <small>Kreupasanam</small>
+            </a>
+
+            <a href="https://www.threads.net/@fr_v_p_joseph_kreupasanam" target="_blank" rel="noopener noreferrer" class="social-card threads reveal" style="transition-delay:0.3s" onclick="window.open(this.href,'_blank');return false;">
+                <i class="fab fa-threads"></i>
+                <span>Threads</span>
+                <small>@fr_v_p_joseph_kreupasanam</small>
+            </a>
+
+            <a href="https://www.youtube.com/@kreupasanammarianshrine" target="_blank" rel="noopener noreferrer" class="social-card youtube reveal" style="transition-delay:0.45s" onclick="window.open(this.href,'_blank');return false;">
+                <i class="fab fa-youtube"></i>
+                <span>YouTube</span>
+                <small>Kreupasanam Marian Shrine</small>
+            </a>
+        </div>
+    </section>
+
+    <!-- PRAYER -->
+    <section class="prayer-section" id="prayer">
+        <div class="section-header reveal">
+            <span class="section-tag">Sacred Words</span>
+            <h2 class="section-title">A Prayer to Kreupasanam Amma</h2>
+            <span class="section-line"></span>
+        </div>
+
+        <div class="prayer-box reveal">
+            <p class="prayer-text">
+                O Blessed Kreupasanam Amma,<br>
+                Mother of Grace and Mercy,<br>
+                you who hold time in your sacred heart —<br>
+                intercede for us before your Son,<br>
+                that in every moment of our lives<br>
+                we may know your love and protection.<br><br>
+                Heal our wounds, console our sorrows,<br>
+                and guide our steps toward eternal light.<br><br>
+                Amen. ✦
+            </p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <span class="footer-cross">✞</span>
+        <span class="footer-name">Kreupasanam Amma</span>
+        <p>Ministry of Fr. V.P. Joseph &middot; Kreupasanam Shrine</p>
+        <p style="margin-top: 1rem; opacity: 0.4; font-size: 0.75rem; letter-spacing: 0.1em;">
+            "She guides our steps toward eternal light."
+        </p>
+    </footer>
+
+    <!-- Floating Button -->
+    <div class="float-light">
+        <a href="#prayer" class="float-pray-btn">
+            🙏 Pray Now
+        </a>
+    </div>
+
+    <script>
+    // ===== STARS =====
+    (function() {
+        const canvas = document.getElementById('stars-canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createStars(n) {
+            stars = [];
+            for (let i = 0; i < n; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: Math.random() * 1.2,
+                    a: Math.random(),
+                    speed: 0.002 + Math.random() * 0.005,
+                    phase: Math.random() * Math.PI * 2
+                });
+            }
+        }
+
+        function draw(t) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(s => {
+                const alpha = s.a * (0.5 + 0.5 * Math.sin(t * s.speed + s.phase));
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255,248,225,${alpha})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(draw);
+        }
+
+        resize();
+        createStars(200);
+        window.addEventListener('resize', () => { resize(); createStars(200); });
+        requestAnimationFrame(draw);
+    })();
+
+    // ===== SCROLL REVEAL =====
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                observer.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
