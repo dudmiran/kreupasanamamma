@@ -791,6 +791,13 @@
         }
 
         /* ===== RESPONSIVE ===== */
+
+        /* Tablet — 769px to 1024px */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* Mobile — 768px and below */
         @media (max-width: 768px) {
             nav { padding: 1rem 1.5rem; }
             .nav-links { display: none; }
@@ -801,6 +808,8 @@
             .testimonials-grid { grid-template-columns: 1fr; }
             .form-row { grid-template-columns: 1fr; }
             .testimonial-form-wrap { padding: 2rem 1.5rem; }
+            .submit-btn { width: 100%; justify-content: center; }
+            .testimonials-section { padding: 4rem 1.2rem; }
         }
     </style>
 </head>
